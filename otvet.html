@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <head>
-<title>Радио Пятница</title>
+<title>Comet Server - Пример php чата</title>
 <script language="JavaScript" type="text/javascript" src="https://comet-server.ru/template/Profitable_site/js/jquery-2.0.3.min.js" ></script>
 <script language="JavaScript" type="text/javascript" src="https://comet-server.ru/CometServerApi.js" ></script>
 </head>
 <body>
-    <div id="radioChatFormForm" ></div> 
-    <input type="text" id="radioChatNameID" placeholder="Ваше имя/ник" > <br>
-    <textarea id = "radioChatTextID" placeholder = "Отправить" ></textarea><br>
+    <div id="WebChatFormForm" ></div> 
+    <input type="text" id="WebChatNameID" placeholder="Укажите ваше имя..." > <br>
+    <textarea id = "WebChatTextID" placeholder = "Отправьте сообщение в online чат..." ></textarea><br>
  
     <input type="button" onclick="web_send_msg();" value="Отправить" >
     <div id="answer_div" ></div>
@@ -25,14 +25,14 @@
          function web_send_msg()
          {
              // Получение значений из элементов ввода.
-             var text = $("#radioChatTextID").val(); // Получаем текст сообщения
-             var name = $("#radioChatNameID").val(); // Получаем имя пользователя
+             var text = $("#WebChatTextID").val(); // Получаем текст сообщения
+             var name = $("#WebChatNameID").val(); // Получаем имя пользователя
  
              // Очистка поля с текстом сообщения
-             $("#radioChatTextID").val("");  
+             $("#WebChatTextID").val("");  
  
              // Добавление отправленного сообщения к списку сообщений.
-             $("#radioChatFormForm").append("<p><b>"+strip(name)+": </b>"+text+"</p>");
+             $("#WebChatFormForm").append("<p><b>"+strip(name)+": </b>"+text+"</p>");
  
              // Отправка сообщения в канал чата
              CometServer().web_pipe_send("web_chat_pipe", {"text":text, "name":name});
@@ -49,7 +49,7 @@
              {
                 console.log(msg)
                  // Добавление полученного сообщения к списку сообщений.
-                 $("#radioChatFormForm").append("<p><b>"+strip(msg.data.name)+": </b>"+msg.data.text+"</p>");
+                 $("#WebChatFormForm").append("<p><b>"+strip(msg.data.name)+": </b>"+msg.data.text+"</p>");
              });
          });
     </script>
