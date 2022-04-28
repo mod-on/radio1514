@@ -1,13 +1,13 @@
 <?php
 /* Здесь проверяется существование переменных */
-if (isset($_POST['name'])) {$phone = $_POST['name'];}
-if (isset($_POST['phone'])) {$name = $_POST['phone'];}
+if (isset($_POST['name'])) {$text = $_POST['name'];}
+if (isset($_POST['text'])) {$name = $_POST['text'];}
  
 /* Сюда впишите свою эл. почту */
 $myaddres  = "modon2424@gmail.com"; // кому отправляем
  
 /* А здесь прописывается текст сообщения, \n - перенос строки */
-$mes = "Тема: Вопрос с радио от\nТелефон: $phone\nИмя: $name";
+$mes = "Тема: Вопрос с радио от: $name";
  
 /* А эта функция как раз занимается отправкой письма на указанный вами email */
 $sub='Радио'; //сабж
@@ -22,7 +22,7 @@ header('Refresh: 3; URL=index.html');
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="refresh" content="3; url=index.html">
-<title>Спасибо! Мы свяжемся с вами!</title>
+<title>Спасибо! Мы обязательно ответим Вам!</title>
 <meta name="generator">
 <script type="text/javascript">
 setTimeout('location.replace("/index.html")', 3000);
@@ -30,6 +30,6 @@ setTimeout('location.replace("/index.html")', 3000);
 </script> 
 </head>
 <body>
-<h1>Спасибо! мы обязательно !</h1>
+<h1>Спасибо! Мы обязательно ответим Вам!</h1>
 </body>
 </html>
