@@ -1,36 +1,57 @@
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" ></script>
-<script type="text/javascript" src="https://comet-server.ru/CometServerApi.js" ></script>
-<script type="text/javascript" src="https://comet-server.ru/doc/html_chat.js" ></script>
-<link rel="stylesheet" type="text/css" href="https://comet-server.ru/doc/html_chat.css"></link>
+<!DOCTYPE HTML>
+<head>
+<title>Радио Пятница</title>
+<script language="JavaScript" type="text/javascript" src="https://comet-server.ru/template/Profitable_site/js/jquery-2.0.3.min.js" ></script>
+<script language="JavaScript" type="text/javascript" src="https://comet-server.ru/CometServerApi.js" ></script>
+</head>
+<body>
+    <div id="radioChatFormForm" ></div> 
+    <input type="text" id="radioChatNameID" placeholder="Ваше имя/ник" > <br>
+    <textarea id = "radioChatTextID" placeholder = "Отправить" ></textarea><br>
  
-<!-- Осталось настроить сам чат и запустить, для этого пишем небольшой скрипт. -->
-<div id="html-chat"></div>
-<style>
-/* Здесь настроим css стили для чата*/
-.holder-html-chat{ border: 1px solid #ccc;padding:10px;background-color: #fff;width: 600px;}
-.html-chat-history{ max-width: 600px; overflow: auto;max-height: 900px; border: 1px solid #ccc;padding: 5px;}
-.html-chat-js-name{ margin-top:10px; }
-.html-chat-js-input{ max-width: 600px;max-height: 100px;width: 600px;margin-top:10px; }
-.html-chat-js-button-holder{ margin-bottom: 0px;margin-top: 10px; }
-.html-chat-js-button-holder input{ width: 220px; }
-.html-chat-js-answer{ float:right; }
-.html-chat-js-answer a{ color: #777;font-size: 12px; font-family: cursive;}
-.html-chat-js-answer a:hover{ color: #338;font-size: 12px; font-family: cursive;}
-.html-chat-msg{ margin: 0px; }
-</style>
+    <input type="button" onclick="web_send_msg();" value="Отправить" >
+    <div id="answer_div" ></div>
  
-<script>
+    <script>
+         // вырезает html теги
+         function strip(html)
+         {
+             var tmp = document.createElement("DIV");
+             tmp.innerHTML = html;
+             return tmp.textContent || tmp.innerText || "";
+         }
  
-   /**
-    * Чат работает на comet-server.ru
-    * По любым вопросам обращайтесь support@comet-server.ru или на сайт comet-server.ru
-    */
-    $(document).ready(function()
-    {
-       // Запуск api комет сервера
-       CometServer().start({dev_id: 15 }) // Идентификатор разработчика на comet-server.ru
+         // Отправляет сообщение в чат
+         function web_send_msg()
+         {
+             // Получение значений из элементов ввода.
+             var text = $("#radioChatTextID").val(); // Получаем текст сообщения
+             var name = $("#radioChatNameID").val(); // Получаем имя пользователя
  
-       // Запуск чата. Передаём ему элемент в котором надо создать окно чата.
-       htmljs_Chat_Init( $("#html-chat") )
-    });
-</script>
+             // Очистка поля с текстом сообщения
+             $("#radioChatTextID").val("");  
+ 
+             // Добавление отправленного сообщения к списку сообщений.
+             $("#radioChatFormForm").append("<p><b>"+strip(name)+": </b>"+text+"</p>");
+ 
+             // Отправка сообщения в канал чата
+             CometServer().web_pipe_send("web_chat_pipe", {"text":text, "name":name});
+         }
+ 
+ 
+         // Функция выполнится после загрузки страницы
+         $(document).ready(function()
+         {
+             CometServer().start({dev_id:1}) // Подключаемся к комет серверу
+ 
+             // Подписываемся на канал в который и будут отправляться сообщения чата.
+             CometServer().subscription("web_chat_pipe", function(msg)
+             {
+                console.log(msg)
+                 // Добавление полученного сообщения к списку сообщений.
+                 $("#radioChatFormForm").append("<p><b>"+strip(msg.data.name)+": </b>"+msg.data.text+"</p>");
+             });
+         });
+    </script>
+</body>
+</html>
