@@ -1,57 +1,28 @@
 <!DOCTYPE HTML>
 <head>
-<title>Comet Server - Пример php чата</title>
-<script language="JavaScript" type="text/javascript" src="https://comet-server.ru/template/Profitable_site/js/jquery-2.0.3.min.js" ></script>
-<script language="JavaScript" type="text/javascript" src="https://comet-server.ru/CometServerApi.js" ></script>
+<title>чат</title>
 </head>
 <body>
-    <div id="WebChatFormForm" ></div> 
-    <input type="text" id="WebChatNameID" placeholder="Укажите ваше имя..." > <br>
-    <textarea id = "WebChatTextID" placeholder = "Отправьте сообщение в online чат..." ></textarea><br>
- 
-    <input type="button" onclick="web_send_msg();" value="Отправить" >
-    <div id="answer_div" ></div>
- 
-    <script>
-         // вырезает html теги
-         function strip(html)
-         {
-             var tmp = document.createElement("DIV");
-             tmp.innerHTML = html;
-             return tmp.textContent || tmp.innerText || "";
-         }
- 
-         // Отправляет сообщение в чат
-         function web_send_msg()
-         {
-             // Получение значений из элементов ввода.
-             var text = $("#WebChatTextID").val(); // Получаем текст сообщения
-             var name = $("#WebChatNameID").val(); // Получаем имя пользователя
- 
-             // Очистка поля с текстом сообщения
-             $("#WebChatTextID").val("");  
- 
-             // Добавление отправленного сообщения к списку сообщений.
-             $("#WebChatFormForm").append("<p><b>"+strip(name)+": </b>"+text+"</p>");
- 
-             // Отправка сообщения в канал чата
-             CometServer().web_pipe_send("web_chat_pipe", {"text":text, "name":name});
-         }
- 
- 
-         // Функция выполнится после загрузки страницы
-         $(document).ready(function()
-         {
-             CometServer().start({dev_id:1}) // Подключаемся к комет серверу
- 
-             // Подписываемся на канал в который и будут отправляться сообщения чата.
-             CometServer().subscription("web_chat_pipe", function(msg)
-             {
-                console.log(msg)
-                 // Добавление полученного сообщения к списку сообщений.
-                 $("#WebChatFormForm").append("<p><b>"+strip(msg.data.name)+": </b>"+msg.data.text+"</p>");
-             });
-         });
-    </script>
+    <script type="text/javascript" src="http://n***n.net/modules/NRMSLib/NRMSLib.js"></script>
+<div id="test_id"></div>
+<script type="text/javascript">
+
+//создание чата
+modules.chat.start({
+'setid': 'modules_chat', //назначем id чата чтобы при необходимости можно было управлять чатом
+'border': '#FF6600', //цвет бордюра рамки чата
+'sizeborder': 1, //размер бордюра, можно указать 0 чтобы бордюра не было видно
+'width': 550, //ширина чата занимаемая на сайте
+'height': 450, //высота чата занимаемая на сайте
+'leftwidth': 550, //ширина левой панели в чате
+'leftheight': 450, //высота левой панели в чате
+'rightheight': 450, //высота правой панели в чате
+'insert': 'test_id', //куда вставляется чат, если указано body значит в документ, но вместо body можно указать id элемента в который будет помещен чат
+'borders': '#FF6600', //цвет бордюров внутри чата
+'chatcolor': '#FFFFFF', //цвет фона панелей чата где сообщения и ники
+'color': '#FFFFFF' //цвет остального фона в чате
+});
+
+</script>
 </body>
 </html>
