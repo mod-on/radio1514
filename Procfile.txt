@@ -1,3 +1,8 @@
 <div class="p-3 mb-2 bg-success text-white"> весна
 <div class="p-3 mb-2 bg-warning text-dark"> осень
 <div class="p-3 mb-2 bg-info text-white"> зима
+
+
+<div class="alert alert-danger" role="alert">
+  <h2><b>Страница находится в разработке</h2>
+</div>
